@@ -1,0 +1,34 @@
+[package]
+name = "pake-cpace-attack"
+version = "0.1.0"
+authors = ["Maël CAINJO REGEARD <>"]
+edition = "2018"
+description = "A simple implementation of CPace, a balanced PAKE, with an attack against it."
+keywords = ["cpace", "crypto", "pake", "attack", "cryptography", "rust"]
+repository = "https://github.com/jedisct1/rust-cpace"
+homepage = "https://github.com/jedisct1/rust-cpace"
+categories = ["algorithms", "cryptography", "no-std"]
+license = "ISC"
+readme = "README.md"
+
+[target.'cfg(all(any(target_arch = "wasm32", target_arch = "wasm64"), target_os = "unknown"))'.dependencies]
+getrandom = { version = "0.2", optional = false, default-features = false, features = [
+    "js",
+] }
+
+[target.'cfg(not(all(any(target_arch = "wasm32", target_arch = "wasm64"), target_os = "unknown")))'.dependencies]
+getrandom = { version = "0.2", optional = false, default-features = false }
+
+[dependencies]
+curve25519-dalek = "4.1"
+hex = "0.4.3"
+hmac-sha512 = "1.1"
+rand = "0.9.1"
+rayon = "1.10.0"
+difference = "2.0"
+term = "1.0.2"
+
+[profile.release]
+lto = true
+panic = "abort"
+opt-level = 3
